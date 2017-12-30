@@ -11,7 +11,7 @@ import { IncidentPage } from '../incident/incident';
 })
 export class IncidentsPage {
   Feedbacks = [];
-  restUri = 'http://52.91.203.160:3000/';//;
+  restUri = 'http://52.91.203.160:3000/';
 
   constructor(private navCtrl: NavController,private http: Http) {
     

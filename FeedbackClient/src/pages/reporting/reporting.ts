@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController , NavController} from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-reporting',
