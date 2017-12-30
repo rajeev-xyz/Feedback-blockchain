@@ -1,0 +1,53 @@
+---
+Profiles:
+  TwoOrgsGenesis:
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+      - *OrdererOrg
+    Consortiums:
+      FeedbackConsortium:
+        Organizations:
+        - *ReviewerOrg
+        - *AgencyOrg
+  TwoOrgsChannel:
+    Consortium: FeedbackConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+      - *ReviewerOrg
+      - *AgencyOrg
+
+Organizations:
+- &OrdererOrg
+  Name: OrdererOrg
+  ID: OrdererMSP
+  MSPDir: cli/peers/ordererOrganizations/orderer-org/msp
+- &ReviewerOrg
+  Name: ReviewerOrgMSP
+  ID: ReviewerOrgMSP
+  MSPDir: cli/peers/peerOrganizations/reviewer-org/msp
+  AnchorPeers:
+  - Host: reviewer-peer
+    Port: 7051
+- &AgencyOrg
+  Name: AgencyOrgMSP
+  ID: AgencyOrgMSP
+  MSPDir: cli/peers/peerOrganizations/agency-org/msp
+  AnchorPeers:
+  - Host: agency-peer
+    Port: 7051
+
+Orderer: &OrdererDefaults
+  OrdererType: solo
+  Addresses:
+  - orderer0:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+  Organizations:
+
+Application: &ApplicationDefaults
+  Organizations:

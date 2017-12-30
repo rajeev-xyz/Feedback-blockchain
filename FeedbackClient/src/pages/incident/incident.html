@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Incident</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-row>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>Feedback To</ion-label>
+          <ion-select disabled="true" name="Org" [(ngModel)]="Feedback.Org">
+            <ion-option *ngFor="let org of orgList">{{org}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label floating>Sentiment</ion-label>
+          <ion-select disabled="true" name="Sentiment" [(ngModel)]="Feedback.Sentiment">
+            <ion-option>Negative</ion-option>
+            <ion-option>Neutral</ion-option>
+            <ion-option>Positive</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item>
+      <ion-label floating>Title</ion-label>
+      <ion-input disabled="true" type="text" name="Title" [(ngModel)]="Feedback.Title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Feedback</ion-label>
+      <ion-textarea disabled="true" name="Description" [(ngModel)]="Feedback.Description"></ion-textarea>
+    </ion-item>
+    <ion-item col-6>
+      <ion-label>Anonymous</ion-label>
+      <ion-checkbox disabled="true" name="IsAnonymous" [(ngModel)]="Feedback.IsAnonymous"></ion-checkbox>
+    </ion-item>
+    <ion-item col-6>
+      <ion-label>Status</ion-label>
+      <ion-select disabled="true" name="Status" [(ngModel)]="Feedback.Status">
+        <ion-option value="new">New</ion-option>
+        <ion-option value="wip">WIP</ion-option>
+        <ion-option value="closed">Closed</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

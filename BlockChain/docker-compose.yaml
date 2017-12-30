@@ -1,0 +1,97 @@
+version: "2.0"
+
+services:
+  agency-ca:
+    container_name: agency-ca
+    hostname: agency-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: agency-ca
+    ports:
+     - 7054:7054
+
+  reviewer-ca:
+    container_name: reviewer-ca
+    hostname: reviewer-ca
+    extends:
+      file: ./ca-base.yaml
+      service: ca-base
+    image: reviewer-ca
+    ports:
+     - 8054:7054
+
+  orderer0:
+    container_name: orderer0
+    hostname: orderer0
+    image: orderer
+    environment:
+    - ORDERER_GENERAL_LOGLEVEL=debug
+    - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+    - ORDERER_GENERAL_GENESISMETHOD=file
+    - ORDERER_GENERAL_GENESISFILE=/orderer/crypto/genesis.block
+    - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+    - ORDERER_GENERAL_LOCALMSPDIR=/orderer/crypto/msp
+    - ORDERER_GENERAL_TLS_ENABLED=true
+    - ORDERER_GENERAL_TLS_PRIVATEKEY=/orderer/crypto/tls/server.key
+    - ORDERER_GENERAL_TLS_CERTIFICATE=/orderer/crypto/tls/server.crt
+    - ORDERER_GENERAL_TLS_ROOTCAS=[/orderer/crypto/tls/ca.crt]
+    working_dir: /orderer
+    command: orderer
+    ports:
+     - 7050:7050
+
+  reviewer-peer:
+    container_name: reviewer-peer
+    hostname: reviewer-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: reviewer-peer
+    environment:
+    - CORE_PEER_ID=reviewer-peer
+    - CORE_PEER_ADDRESS=reviewer-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=reviewer-peer:7051
+    - CORE_PEER_LOCALMSPID=ReviewerOrgMSP
+    ports:
+    - 7051:7051
+    - 7053:7053
+    depends_on:
+    - orderer0
+
+  agency-peer:
+    container_name: agency-peer
+    hostname: agency-peer
+    extends:
+      file: ./peer-base.yaml
+      service: peer-base
+    image: agency-peer
+    environment:
+    - CORE_PEER_ID=agency-peer
+    - CORE_PEER_ADDRESS=agency-peer:7051
+    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=agency-peer:7051
+    - CORE_PEER_LOCALMSPID=AgencyOrgMSP
+    ports:
+    - 8051:7051
+    - 8053:7053
+    depends_on:
+    - orderer0
+    - reviewer-peer
+
+#  web:
+#    container_name: web
+#   image: web
+#    environment:
+#    - PORT=3000
+#    - DOCKER_SOCKET_PATH=/host/var/run/docker.sock
+#    - DOCKER_CCENV_IMAGE=hyperledger/fabric-ccenv:x86_64-1.0.2
+#    ports:
+#    - 3000:3000
+#    volumes:
+#    - /var/run/:/host/var/run/
+#    depends_on:
+#    - orderer0
+#    - reviewer-ca
+#    - reviewer-peer
+#    - agency-ca
+#   - agency-peer

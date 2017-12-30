@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Report Incident</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form (ngSubmit)="createIncident()">
+    <ion-list>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>Feedback To</ion-label>
+            <ion-select name="Org" [(ngModel)]="Feedback.Org">
+              <ion-option *ngFor="let org of orgList">{{org}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label floating>Sentiment</ion-label>
+            <ion-select name="Sentiment" [(ngModel)]="Feedback.Sentiment">
+              <ion-option>Negative</ion-option>
+              <ion-option>Neutral</ion-option>
+              <ion-option>Positive</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-label floating>Title</ion-label>
+        <ion-input type="text" name="Title" [(ngModel)]="Feedback.Title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Feedback</ion-label>
+        <ion-textarea name="Description" [(ngModel)]="Feedback.Description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Anonymous</ion-label>
+        <ion-checkbox name="IsAnonymous" [(ngModel)]="Feedback.IsAnonymous"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <button ion-button round type="button" (click)="clearForm()">Cancel</button>
+    <button ion-button round type="submit">Submit</button>
+  </form>
+</ion-content>

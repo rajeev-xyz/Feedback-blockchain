@@ -1,0 +1,12 @@
+for running node code on host
+change network name in peer.base
+add hostname in docker-compose (same as container name)
+create this container :
+	docker run --rm --volumes-from=feedback-app--node-modules -v $PWD/package.json:/tmp/app/package.json:ro node:6.11.3 /bin/bash -c "cd /tmp/app/; npm install"
+restart all containers 
+in same terminal,
+npm run build
+npm run serve
+
+
+

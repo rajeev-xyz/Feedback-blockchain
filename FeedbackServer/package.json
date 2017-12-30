@@ -1,0 +1,19 @@
+{
+  "name": "incidentreportingserver",
+  "version": "1.0.0",
+  "description": "Server side code to provide backend services to Incident Reporting tool",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rajeev.Jayaswal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.7"
+  },
+  "config": {
+    "PORT": 3000,
+    "DBUri": "mongodb://incident_admin:admin123@ds011482.mlab.com:11482/incident_reporting"
+  }
+}
