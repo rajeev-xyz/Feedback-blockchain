@@ -11,7 +11,7 @@ export class ReportingPage {
 
   Feedback = {};
   orgList: string[];
-  restUri = 'http://localhost:3000/';//'http://52.91.203.160:3000/'; 
+  restUri = 'http://52.91.203.160:3000/'; 
 
   constructor(private navCtrl:NavController, private http: Http, private alertCtrl: AlertController) {
     (this.Feedback as any).Org = "UAE Gov";
@@ -30,13 +30,7 @@ export class ReportingPage {
     //console.log(this.Incident);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json; charset=UTF-8');
-    
-    var data = {
-      IsAnonymous: (this.Feedback as any).IsAnonymous,
-      Description: (this.Feedback as any).Description,
-      Org: (this.Feedback as any).Org
-    };
-    
+        
     this.http.post(this.restUri + 'createFeedback', this.Feedback, {headers: headers})
     .subscribe(
       data => {

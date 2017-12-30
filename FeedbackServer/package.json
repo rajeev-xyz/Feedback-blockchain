@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
-    "mongoose": "^4.13.7"
+    "mongoose": "^4.13.7",
+    "server.js": "^1.0.0"
   },
   "config": {
     "PORT": 3000,
