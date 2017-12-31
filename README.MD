@@ -6,9 +6,9 @@
 It enables users to file an anonymous feedback or report an incident anonymously pertaining to areas of Governance, Police or Administration. It is fully decentralized hence tamper-proof by any authority.</p>
 
 <h3>Technology used</h3>
-<li>1. Ionic 3 (Angular 4 + TypeScript + Jquery + HTML + CSS etc);<li>
-<li>2. Node.JS as backend library + Express.JS as backend framework.</li>
-<li>3. Blockchain technology - Hyperledger fabric </li>
+1. Ionic 3 (Angular 4 + TypeScript + Jquery + HTML + CSS etc);
+2. Node.JS as backend library + Express.JS as backend framework.
+3. Blockchain technology - Hyperledger fabric
     - Chaincode - Golang
     - Docker
 
