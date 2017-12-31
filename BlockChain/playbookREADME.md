@@ -11,7 +11,10 @@ To debug/develop
 		npm run build
 		npm run serve
 
-		Now the node does not know how to talk to all containers (ip, name), so run a proxy dns container like so 	docker run --rm --volumes-from=feedback-app--node-modules -v $PWD/package.json:/tmp/app/package.json:ro node:6.11.3 /bin/bash -c "cd /tmp/app/; npm install"
+		Now the node does not know how to talk to all containers (ip, name), so run a proxy dns container like so 	docker run --hostname dns.mageddo --name dns-proxy-server -p 5380:5380 \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /etc/resolv.conf:/etc/resolv.conf \
+defreitas/dns-proxy-server
 		In your docker-compose, add hostname:(same as container name) line
 		Also, change name in peer.base (this is generic, for some reason that is not the name of the network being built)
 		Restart all containers

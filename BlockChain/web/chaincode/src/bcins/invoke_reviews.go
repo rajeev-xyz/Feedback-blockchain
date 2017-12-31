@@ -38,7 +38,7 @@ func listReviews(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 		}
 
 		result := struct {
-			UUID string `json:"uuid"`
+			ID string `json:"id"`
 			*review
 		}{}
 		err = json.Unmarshal(kvResult.Value, &result)
@@ -55,9 +55,9 @@ func listReviews(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 		// Fetch key
 		prefix, keyParts, err := stub.SplitCompositeKey(kvResult.Key)
 		if len(keyParts) < 2 {
-			result.UUID = prefix
+			result.ID = prefix
 		} else {
-			result.UUID = keyParts[1]
+			result.ID = keyParts[1]
 		}
 
 		results = append(results, result)
@@ -76,10 +76,17 @@ func fileReview(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	}
 
 	dto := struct {
-		UUID         string    `json:"uuid"`
+		ID         string    `json:"id"`
 		Date         time.Time `json:"date"`
 		Description  string    `json:"description"`
-		IsHappy      bool      `json:"is_happy"`
+		Title	     string `json:"title"`
+		IsAnonymous bool `json:"is_anonymous"`
+		ReviewForRole SystemRoles `json:"review_for_role"`
+		Username string `json:"username"`
+		IsPositive      bool      `json:"is_positive"`
+		Location string `json:"location"`
+		Priority int `json:"priority"`
+		Attachment string `json:"attachment"`
 	}{}
 	err := json.Unmarshal([]byte(args[0]), &dto)
 	if err != nil {
@@ -89,11 +96,18 @@ func fileReview(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	review := review{
 		Date:         dto.Date,
 		Description:  dto.Description,
-		IsHappy:      dto.IsHappy,
+		IsPositive:      dto.IsPositive,
 		Status:       ReviewStatusNew,
+		Title:	     dto.Title,
+		IsAnonymous:  dto.IsAnonymous,
+		ReviewForRole: dto.ReviewForRole,
+		Username: dto.Username,
+		Location: dto.Location,
+		Priority: dto.Priority,
+		Attachment: dto.Attachment,
 	}
         reviewKey, err := stub.CreateCompositeKey(prefixReview,
-		[]string{review.Date.String(), review.Description})
+		[]string{review.Date.String(), review.Title})
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -109,4 +123,41 @@ func fileReview(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	}
 
 	return shim.Success(nil)
+}
+
+func authUser(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 1 {
+		return shim.Error("Invalid argument count.")
+	}
+
+	input := struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}{}
+
+	authenticated := false
+
+	err := json.Unmarshal([]byte(args[0]), &input)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	userKey, err := stub.CreateCompositeKey(prefixUser, []string{input.Username})
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	userBytes, _ := stub.GetState(userKey)
+	if len(userBytes) == 0 {
+		authenticated = false
+	} else {
+		user := user{}
+		err := json.Unmarshal(userBytes, &user)
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		authenticated = user.Password == input.Password
+	}
+
+	authBytes, _ := json.Marshal(authenticated)
+	return shim.Success(authBytes)
 }

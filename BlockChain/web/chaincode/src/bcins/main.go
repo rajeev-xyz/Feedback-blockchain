@@ -9,7 +9,7 @@ import (
 	pb "github.com/hyperledger/fabric/protos/peer"
 )
 const prefixReview = "review"
-
+const prefixUser = "user"
 var logger = shim.NewLogger("main")
 
 type SmartContract struct {
