@@ -2,12 +2,13 @@
 <h2>Introduction</h2>
     This is mobile (android and iOS) feedback app created using ionic 3 application in client side and Node.JS in server side. We are using Hyperledger Fabric as blockchain technology as distributed database.
 
-    This app will empower the people by leveraging the security and anonymity of decentralized systems. It enables users to file an anonymous feedback or report an incident anonymously pertaining to areas of Governance, Police or Administration. It is fully decentralized hence tamper-proof by any authority.
+<p>This app will empower the people by leveraging the security and anonymity of decentralized systems. 
+It enables users to file an anonymous feedback or report an incident anonymously pertaining to areas of Governance, Police or Administration. It is fully decentralized hence tamper-proof by any authority.</p>
 
 <h3>Technology used</h3>
-1. Ionic 3 (Angular 4 + TypeScript + Jquery + HTML + CSS etc);
-2. Node.JS as backend library + Express.JS as backend framework.
-3. Blockchain technology - Hyperledger fabric 
+<li>1. Ionic 3 (Angular 4 + TypeScript + Jquery + HTML + CSS etc);<li>
+<li>2. Node.JS as backend library + Express.JS as backend framework.</li>
+<li>3. Blockchain technology - Hyperledger fabric </li>
     - Chaincode - Golang
     - Docker
 
@@ -15,6 +16,8 @@
 -Generate Certificates for peers
 -Build Docker images for network
 -Start the insurance network
+
+<img src="Feedbackz.png"></img>
 
 Dev Notes to run this app.
 
