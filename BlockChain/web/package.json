@@ -42,7 +42,7 @@
     "json-style-converter": "1.0.3",
     "lodash": "4.17.4",
     "moment": "2.18.1",
-    "moment-timezone": "0.5.13",
+    "moment-timezone": "0.5.35",
     "morgan": "1.8.2",
     "prop-types": "15.5.10",
     "pug": "2.0.0-rc.4",
